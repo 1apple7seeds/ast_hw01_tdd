@@ -1,62 +1,98 @@
 package development;
 
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Question2 {
 	
-    public int[] prime_numbers(int integer_limit) {
-    	ArrayList<Integer> primeNumbersList = new ArrayList<Integer>();
-    	primeNumbersList.add(2);
-    	for (int integer=3; integer<integer_limit; integer+=2) {
-    		boolean isPrime = true;
-    		for (int prime_number:primeNumbersList) {
-    			if (integer % prime_number == 0) {
-    				isPrime = false;
+    public int primes_int(int input, boolean print_check) {
+		
+		if(input == 0) {
+			input = Integer.MAX_VALUE;
+		}
+		
+		if(print_check) {
+			System.out.println(2);
+		}
+		
+    	int output = 1,count = 1;
+    	boolean check_prime;
+    	
+    	while(count < input && output < Integer.MAX_VALUE) {
+    		check_prime = true;
+    		output+=2;
+    		count++;
+    		for(int i = (int)Math.sqrt(output);i>2;i--) {
+    			if(output % i == 0) {
+    				check_prime = false;
+    				count--;
     				break;
     			}
     		}
-    		if (isPrime == true) {
-    			primeNumbersList.add(integer);
-			}
+    		if(check_prime & print_check) {
+    			System.out.println(output);
+    		}
     	}
-    	int[] primeNumberArray = new int[primeNumbersList.size()];
-    	for (int cnt=0; cnt<primeNumbersList.size(); cnt++) {
-    		primeNumberArray[cnt] = primeNumbersList.get(cnt);
+        return output;
+    }
+	
+	public long primes_long(long input, boolean print_check) {
+		
+		if(input == 0) {
+			input = Long.MAX_VALUE;
+		}
+		
+		if(print_check) {
+			System.out.println(2);
+		}
+		
+    	long output = 1,count = 1;
+    	boolean check_prime;
+    	
+    	while(count < input && output < Long.MAX_VALUE) {
+    		check_prime = true;
+    		output+=2;
+    		count++;
+    		for(int i = (int)Math.sqrt(output);i>2;i--) {
+    			if(output % i == 0) {
+    				check_prime = false;
+    				count--;
+    				break;
+    			}
+    		}
+    		if(check_prime & print_check) {
+    			System.out.println(output);
+    		}
     	}
-        return primeNumberArray;
+        return output;
     }
     
-    public float time_int() {
-    	int integer = 1;
-    	while(integer>0) {
-    		integer++;
-		}
-    	int largestInteger = integer-1;
+    public double time_int() {
+    	int integer = Integer.MIN_VALUE;
+    	
     	long startTime= System.nanoTime();
-    	while(integer != largestInteger) {
+    	do {
     		integer++;
-    	}
+    	}while(integer<Integer.MAX_VALUE);
     	long endTime = System.nanoTime();
-    	float timeElapsed = endTime-startTime;
-    	float timeElapsedInSeconds = timeElapsed/1000000000;
+    	
+    	long timeElapsed = endTime-startTime;
+    	double timeElapsedInSeconds = (double)timeElapsed/1_000_000_000.0;
         return timeElapsedInSeconds;
     }
 
-    public float time_long() {   
-    	int integer = 1;
-    	while(integer>0) {
-    		integer++;
-		}
-    	int largestInteger = integer-1;
+    public double time_long() {   
+    	int integer = Integer.MIN_VALUE;
+    	
     	long startTime= System.nanoTime();
-    	while(integer != largestInteger) {
+    	do {
     		integer++;
-    	}
+    	}while(integer<Integer.MAX_VALUE);
     	long endTime = System.nanoTime();
-    	float timeElapsed = endTime-startTime;
-    	float timeElapsedInSeconds = timeElapsed/1000000000;
-    	float longToIntFactor = (float) Math.pow(2,32);
-    	float estimatedTimeTaken = longToIntFactor * timeElapsedInSeconds;
+    	
+    	long timeElapsed = endTime-startTime;
+    	double timeElapsedInSeconds = (double)timeElapsed/1_000_000_000.0;
+    	double longToIntFactor = Math.pow(2.0,32.0);
+    	double estimatedTimeTaken = longToIntFactor * timeElapsedInSeconds;
         return estimatedTimeTaken;
     }
     
@@ -75,29 +111,48 @@ public class Question2 {
     
   
     public static void main(String []args) { 
-    	int integer_limit = 1000;
-    	int[] prime_numbers = new Question2().prime_numbers(integer_limit);
-    	System.out.println("Prime numbers from 0 to " + String.valueOf(integer_limit) + ":");
-    	printarray(prime_numbers);
-    	System.out.print("\n\n");
+    	
+    	Question2 q2 = new Question2();
+    	Scanner scanner = new Scanner (System.in);
+    	
+    	int th1 = 100;
+    	int prime1 = q2.primes_int(th1,false);
+    	System.out.println(th1+"-th integer prime number: "+prime1+"\n");
+    	
+    	long th2 = 10000;
+    	long prime2 = q2.primes_long(th2,false);
+    	System.out.println(th2+"-th long integer prime number: "+prime2+"\n");
     	
     	System.out.println("Time taken to count (increment with unit step) from smallest to largest integer:");
-    	float integerCountingTime = new Question2().time_int();
-    	System.out.println(String.format("%.4f seconds", integerCountingTime));
-    	System.out.print("\n\n");
+    	double integerCountingTime = q2.time_int();
+    	System.out.println(integerCountingTime+" seconds\n");
     	
     	System.out.println("Estimated time taken to count (increment with unit step) from smallest to largest long integer:");
-    	float longCountingTime = new Question2().time_long();
-    	int longCountingDays = (int) (longCountingTime / (24*60*60));
-    	longCountingTime -= (float) longCountingDays*24*60*60; 
+    	double longCountingTime = q2.time_long();
+    	int longCountingDays = (int)(longCountingTime / (24.0*60.0*60.0));
+    	longCountingTime -= (double)longCountingDays*24.0*60.0*60.0; 
     	System.out.println(String.format("%d days", longCountingDays));
-    	int longCountingHours = (int) (longCountingTime / (60*60));
-    	longCountingTime -= (float) longCountingHours*60*60; 
+    	int longCountingHours = (int)(longCountingTime / (60.0*60.0));
+    	longCountingTime -= (double)longCountingHours*60.0*60.0; 
     	System.out.println(String.format("%d hours", longCountingHours));
-    	int longCountingMinutes = (int) (longCountingTime / (60));
-    	longCountingTime -= (float) longCountingMinutes*60; 
+    	int longCountingMinutes = (int)(longCountingTime / 60.0);
+    	longCountingTime -= (double)longCountingMinutes*60.0; 
     	System.out.println(String.format("%d minutes", longCountingMinutes));
-    	int longCountingSeconds = (int) (longCountingTime);
-    	System.out.println(String.format("%d seconds", longCountingSeconds));    	
+    	int longCountingSeconds = (int)longCountingTime;
+    	System.out.println(String.format("%d seconds", longCountingSeconds));
+    	
+    	System.out.println("\nWARNING: This will be a looo..ooong ride.");
+    	System.out.print("Do you want to take a look at all the integer prime numbers?[y/n] ");
+    	String yn1 = scanner.next();
+    	if(yn1.equals("y")) {
+    		q2.primes_int(0,true);
+    	}
+    	
+    	System.out.println("\nWARNING: This will be a looo..ooong ride.");
+    	System.out.print("Do you want to take a look at all the long integer prime numbers?[y/n] ");
+    	String yn2 = scanner.next();
+    	if(yn2.equals("y")) {
+    		q2.primes_long(0,true);
+    	}
     }
 }

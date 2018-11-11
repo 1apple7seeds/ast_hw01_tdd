@@ -4,36 +4,34 @@ import java.util.Scanner;
 
 public class Question4 {
 	
-    public double user_diameter_check(String user_diameter) {
-    	boolean isNumeric = true;
+    public int user_diameter_check(String user_diameter) {
         for (char c : user_diameter.toCharArray()) {
-            if (!Character.isDigit(c) && c!=".".charAt(0)) {isNumeric=false; break;}
+            if (!Character.isDigit(c) & c != ".".charAt(0)) {
+            	throw new NumberFormatException("The input must be a positive integer!");
+            }
         }
-        if (isNumeric) {
-    		return Float.valueOf(user_diameter);
-        } else {
-        	System.out.println("The input must be a positive number!");
-        	System.out.print("\n"); 
+        if (Integer.valueOf(user_diameter)==0) {
+        	throw new NumberFormatException("The input must be greater than zero (0)!");
+        }else if(user_diameter.length()>String.valueOf(Integer.MAX_VALUE).length()) {
+        	throw new NumberFormatException("The input must be greater than zero (0), but don't exaggerate!");
         }
-        return -1;
+    	return Integer.valueOf(user_diameter);
     }
     
     public int user_precision_check(String user_precision) {
-    	boolean isNumeric = true;
-        for (char c : user_precision.toCharArray()) {
-            if (!Character.isDigit(c)) {isNumeric=false; break;}
+    	for (char c : user_precision.toCharArray()) {
+            if (!Character.isDigit(c)) {
+            	throw new NumberFormatException("The input must be zero (0) or a positive integer!");
+            }
         }
-        if (isNumeric) {
-    		if (Integer.valueOf(user_precision)>15) {
-    			return 15;
-			} else {
-				return Integer.valueOf(user_precision);
-			}
-        } else {
-        	System.out.println("The input must be a positive integer!");
-        	System.out.print("\n"); 
+    	if(user_precision.length()>String.valueOf(Integer.MAX_VALUE).length()) {
+        	throw new NumberFormatException("The input must be zero (0) or larger, but don't exaggerate!");
         }
-        return -1;
+		if (Integer.valueOf(user_precision)>15) {
+			return 15;
+		} else {
+			return Integer.valueOf(user_precision);
+		}
     }
     
     public double pi_approx(int precision) {
@@ -63,6 +61,19 @@ public class Question4 {
     		circumferenceIncrements[cnt] = 100*(circumferenceList[cnt+1]-circumferenceList[cnt])/circumferenceList[cnt];
     	}
     	return circumferenceIncrements;
+    }
+    
+    public double[] percentage_increase_area(double diameter, int precision) {
+    	double[] areaList = new double[precision+1];
+    	for (int precision_cnt = 0; precision_cnt <= precision; precision_cnt++) {
+    		double pi_approx = new Question4().pi_approx(precision_cnt);
+    		areaList[precision_cnt] = new Question4().area(diameter, pi_approx);
+    	}
+    	double[] areaIncrements = new double[precision];
+    	for (int cnt = 0; cnt<precision; cnt++) {
+    		areaIncrements[cnt] = 100*(areaList[cnt+1]-areaList[cnt])/areaList[cnt];
+    	}
+    	return areaIncrements;
     }  
     
     public static void printarray(double[] array_to_print) {
@@ -120,5 +131,10 @@ public class Question4 {
     	System.out.println("Percentage increments of the circumference:");
     	printarray(circumferenceIncrements);
     	System.out.print("\n");    	
+    	
+    	double[] areaIncrements = new Question4().percentage_increase_area(validatedDiameter, validatedPrecision);
+    	System.out.println("\nPercentage increments of the area:");
+    	printarray(areaIncrements);
+    	System.out.print("\n");
     }
 }
