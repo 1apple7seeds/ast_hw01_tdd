@@ -154,5 +154,6 @@ public class Question2 {
     	if(yn2.equals("y")) {
     		q2.primes_long(0,true);
     	}
+    	scanner.close();
     }
 }

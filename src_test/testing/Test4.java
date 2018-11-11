@@ -24,27 +24,27 @@ public final class Test4 {
 
 	@Test
 	public void user_diameter_test1_ThrowsNumberFormatException() {
-		assertThrows(NumberFormatException.class, () -> q4.user_diameter_check(" 1"));
+		assertThrows(NumberFormatException.class, () -> q4.user_diameter_check(" 1",null));
 	}
 	
 	@Test
 	public void user_diameter_test2_ThrowsNumberFormatException() {
-		assertThrows(NumberFormatException.class, () -> q4.user_diameter_check("0"));
+		assertThrows(NumberFormatException.class, () -> q4.user_diameter_check("0",null));
 	}
 	
 	@Test
 	public void user_diameter_test3_ThrowsNumberFormatException() {
-		assertThrows(NumberFormatException.class, () -> q4.user_diameter_check("9999999999999999999999999999999999999999999999999999999"));
+		assertThrows(NumberFormatException.class, () -> q4.user_diameter_check("999999999999999999999999999999999999999999999999",null));
 	}
 
 	@Test
 	public void user_precision_test1_ThrowsNumberFormatException() {
-		assertThrows(NumberFormatException.class, () -> q4.user_precision_check(" 1"));
+		assertThrows(NumberFormatException.class, () -> q4.user_precision_check(" 1",null));
 	}
 	
 	@Test
 	public void user_precision_test2_ThrowsNumberFormatException() {
-		assertThrows(NumberFormatException.class, () -> q4.user_precision_check("999999999999999999999999999999999999999999999999999999"));
+		assertThrows(NumberFormatException.class, () -> q4.user_precision_check("999999999999999999999999999999999999999999999999",null));
 	}
 	
 	@Test

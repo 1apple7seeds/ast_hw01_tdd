@@ -13,12 +13,12 @@ class Test3 {
 	Question3 Q3;
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		Q3 = new Question3();
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		Q3 = null;
 	}
 	
@@ -34,14 +34,6 @@ class Test3 {
 		assertEquals(0,Q3.func_sqrt()[0]);
 		assertEquals(7,Q3.func_sqrt()[49]);
 		assertEquals(9,Q3.func_sqrt()[81]);
-	}
-
-	@Test
-	void func_10_pow_n_test() {
-		assertEquals("1",Q3.func_10_pow_n()[0]);
-		assertEquals("10",Q3.func_10_pow_n()[1]);
-		assertEquals("1000000",Q3.func_10_pow_n()[6]);
-		assertEquals("10...0 (99 zeros)",Q3.func_10_pow_n()[99]);
 	}
 	
 	@Test
@@ -63,5 +55,14 @@ class Test3 {
 		assertEquals("1",Q3.func_e_pow_n()[0]);
 		assertEquals("2",Q3.func_e_pow_n()[1]);
 		assertEquals("485165195",Q3.func_e_pow_n()[20]);
-		assertEquals("e^99",Q3.func_e_pow_n()[99]);	}
+		assertEquals("e^99",Q3.func_e_pow_n()[99]);	
+	}
+	
+	@Test
+	void func_10_pow_n_test() {
+		assertEquals("1",Q3.func_10_pow_n()[0]);
+		assertEquals("10",Q3.func_10_pow_n()[1]);
+		assertEquals("1000000",Q3.func_10_pow_n()[6]);
+		assertEquals("10...0 (99 zeros)",Q3.func_10_pow_n()[99]);
+	}
 }

@@ -4,9 +4,15 @@ import java.util.Scanner;
 
 public class Question4 {
 	
-    public int user_diameter_check(String user_diameter) {
+    public int user_diameter_check(String user_diameter, Scanner scanner) {
+    	
+    	if(user_diameter == null) {
+        	System.out.print("Enter an integer number: ");
+        	user_diameter = scanner.next();
+	    }
+    	
         for (char c : user_diameter.toCharArray()) {
-            if (!Character.isDigit(c) & c != ".".charAt(0)) {
+            if (!Character.isDigit(c)) {
             	throw new NumberFormatException("The input must be a positive integer!");
             }
         }
@@ -18,7 +24,13 @@ public class Question4 {
     	return Integer.valueOf(user_diameter);
     }
     
-    public int user_precision_check(String user_precision) {
+    public int user_precision_check(String user_precision, Scanner scanner) {
+    	
+    	if(user_precision == null) {
+    		System.out.print("Enter precision: ");
+        	user_precision = scanner.next();
+	    }
+    	
     	for (char c : user_precision.toCharArray()) {
             if (!Character.isDigit(c)) {
             	throw new NumberFormatException("The input must be zero (0) or a positive integer!");
@@ -90,49 +102,34 @@ public class Question4 {
     }
     
     public static void main(String []args) {  
+    	Question4 q4 = new Question4();
     	Scanner scanner = new Scanner (System.in);
-    	String user_diameter = null;
-    	double validatedDiameter = 0;    	
-    	boolean validDiameterReceived = false;
-    	while (!validDiameterReceived) {
-    		System.out.println("Enter diameter value:");
-    		user_diameter = scanner.next();
-    		validatedDiameter = new Question4().user_diameter_check(user_diameter);
-    		if (validatedDiameter != -1) {validDiameterReceived = true;}
-    	}
-    	System.out.print("\n");
+    	
+		int validatedDiameter = q4.user_diameter_check(null,scanner);
+		int validatedPrecision = q4.user_precision_check(null,scanner);
 		
-    	String user_precision = null;
-    	int validatedPrecision = 0;    	
-    	boolean validatedPrecisionReceived = false;
-    	while (!validatedPrecisionReceived) {
-    		System.out.println("Enter precision value:");
-    		user_precision = scanner.next();
-    		validatedPrecision = new Question4().user_precision_check(user_precision);
-    		if (validatedPrecision != -1) {validatedPrecisionReceived = true;}
-    	}
-    	System.out.print("\n");
     	scanner.close();
+    	System.out.print("\n\n");
 
-    	double pi_approx = new Question4().pi_approx(validatedPrecision);
+    	double pi_approx = q4.pi_approx(validatedPrecision);
     	System.out.print("Approximated Pi value: ");
     	System.out.println(pi_approx);
     	
-		double circumference = new Question4().circumference(validatedDiameter, pi_approx);
+		double circumference = q4.circumference(validatedDiameter, pi_approx);
     	System.out.print("Circumference: ");
     	System.out.println(circumference);
     	
-		double area = new Question4().area(validatedDiameter, pi_approx);
+		double area = q4.area(validatedDiameter, pi_approx);
     	System.out.print("Area: ");
     	System.out.println(area);
     	System.out.print("\n"); 
     	
-    	double[] circumferenceIncrements = new Question4().percentage_increase_circumference(validatedDiameter, validatedPrecision);
+    	double[] circumferenceIncrements = q4.percentage_increase_circumference(validatedDiameter, validatedPrecision);
     	System.out.println("Percentage increments of the circumference:");
     	printarray(circumferenceIncrements);
     	System.out.print("\n");    	
     	
-    	double[] areaIncrements = new Question4().percentage_increase_area(validatedDiameter, validatedPrecision);
+    	double[] areaIncrements = q4.percentage_increase_area(validatedDiameter, validatedPrecision);
     	System.out.println("\nPercentage increments of the area:");
     	printarray(areaIncrements);
     	System.out.print("\n");
