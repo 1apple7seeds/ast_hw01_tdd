@@ -40,7 +40,6 @@ public final class Test2 {
 	public void time_int_test() {
 		final double expected = 0.002;
         final double actual = q2.time_int();
-        System.out.println(actual);
         assertEquals(actual, expected, 0.001);
 	}
 	
@@ -48,7 +47,6 @@ public final class Test2 {
 	public void time_long_test() {
 		final double expected = 100.0;
         final double actual = q2.time_long() / (24.0*60.0*60.0);
-        System.out.println(actual);
         assertEquals(actual, expected, 30.0);
 	}
 }
